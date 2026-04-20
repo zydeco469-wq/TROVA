@@ -1,41 +1,26 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
 import { produits } from '@/lib/produits'
+import { SelecteurDevise, useDevise } from '@/lib/devise'
 
 export default function Home() {
-  const [panier, setPanier] = useState<string[]>([])
-
-  const ajouterAuPanier = (id: string) => {
-    const saved = JSON.parse(localStorage.getItem('trova_panier') || '[]')
-    saved.push(id)
-    localStorage.setItem('trova_panier', JSON.stringify(saved))
-    setPanier(saved)
-  }
+  const { convertir } = useDevise()
 
   return (
     <main style={{ background: '#0E0E0E', minHeight: '100vh', color: '#F5F0E8' }}>
 
       {/* NAVBAR */}
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '1.4rem 3rem',
-        background: 'rgba(14,14,14,0.93)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '0.5px solid rgba(184,150,110,0.2)',
-      }}>
-        <Link href="/" style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.8rem', fontWeight: 300, letterSpacing: '0.3em', color: '#B8966E', textDecoration: 'none' }}>
-          TROVA
-        </Link>
+      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.4rem 3rem', background: 'rgba(14,14,14,0.93)', backdropFilter: 'blur(12px)', borderBottom: '0.5px solid rgba(184,150,110,0.2)' }}>
+        <Link href="/" style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.8rem', fontWeight: 300, letterSpacing: '0.3em', color: '#B8966E', textDecoration: 'none' }}>TROVA</Link>
         <div style={{ display: 'flex', gap: '2.5rem' }}>
           {['Collections', 'Nouveautés', 'À propos'].map(l => (
             <Link key={l} href="/produits" style={{ fontSize: '0.68rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,240,232,0.7)', textDecoration: 'none' }}>{l}</Link>
           ))}
         </div>
-        <Link href="/panier" style={{ fontSize: '0.68rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#B8966E', textDecoration: 'none', border: '0.5px solid rgba(184,150,110,0.4)', padding: '0.5rem 1rem' }}>
-          Panier
-        </Link>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <SelecteurDevise />
+          <Link href="/panier" style={{ fontSize: '0.68rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#B8966E', textDecoration: 'none', border: '0.5px solid rgba(184,150,110,0.4)', padding: '0.5rem 1rem' }}>Panier</Link>
+        </div>
       </nav>
 
       {/* HERO */}
@@ -49,21 +34,17 @@ export default function Home() {
             Mode &<br /><em style={{ fontStyle: 'italic', color: '#D4B896' }}>Élégance</em><br />Redéfinie
           </h1>
           <p style={{ fontSize: '0.83rem', fontWeight: 300, lineHeight: 1.9, color: 'rgba(245,240,232,0.6)', maxWidth: '400px', marginBottom: '3rem' }}>
-            T-shirts oversize, robes d&apos;été, lunettes et casquettes premium. TROVA réunit les tendances mondiales livrées directement chez vous.
+            T-shirts, polos, chemises premium. TROVA réunit les tendances mondiales livrées directement chez vous.
           </p>
           <div style={{ display: 'flex', gap: '1.2rem' }}>
-            <Link href="/produits" style={{ background: '#B8966E', color: '#0E0E0E', padding: '0.9rem 2.5rem', fontSize: '0.68rem', letterSpacing: '0.2em', textTransform: 'uppercase', textDecoration: 'none', fontWeight: 400 }}>
-              Explorer
-            </Link>
-            <Link href="/produits" style={{ background: 'transparent', color: '#F5F0E8', padding: '0.9rem 2rem', fontSize: '0.68rem', letterSpacing: '0.2em', textTransform: 'uppercase', textDecoration: 'none', border: '0.5px solid rgba(245,240,232,0.3)' }}>
-              Voir la collection
-            </Link>
+            <Link href="/produits" style={{ background: '#B8966E', color: '#0E0E0E', padding: '0.9rem 2.5rem', fontSize: '0.68rem', letterSpacing: '0.2em', textTransform: 'uppercase', textDecoration: 'none', fontWeight: 400 }}>Explorer</Link>
+            <Link href="/produits" style={{ background: 'transparent', color: '#F5F0E8', padding: '0.9rem 2rem', fontSize: '0.68rem', letterSpacing: '0.2em', textTransform: 'uppercase', textDecoration: 'none', border: '0.5px solid rgba(245,240,232,0.3)' }}>Voir la collection</Link>
           </div>
         </div>
-        <div style={{ background: '#1A1612', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-          <img src="/hero-bg.jpg" alt="TROVA" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, opacity: 0.6 }} />
-          <div style={{ position: 'absolute', bottom: '3rem', right: '3rem', border: '0.5px solid rgba(184,150,110,0.4)', padding: '1.2rem 1.5rem', textAlign: 'center' }}>
-            <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2.2rem', color: '#B8966E', display: 'block' }}>4</span>
+        <div style={{ position: 'relative', overflow: 'hidden' }}>
+          <img src="/hero-bg.jpg" alt="TROVA" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }} />
+          <div style={{ position: 'absolute', bottom: '3rem', right: '3rem', border: '0.5px solid rgba(184,150,110,0.4)', padding: '1.2rem 1.5rem', textAlign: 'center', background: 'rgba(14,14,14,0.7)' }}>
+            <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2.2rem', color: '#B8966E', display: 'block' }}>6</span>
             <span style={{ fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(245,240,232,0.5)' }}>Collections</span>
           </div>
         </div>
@@ -72,7 +53,7 @@ export default function Home() {
       {/* MARQUEE */}
       <div style={{ background: '#B8966E', padding: '0.7rem 0', overflow: 'hidden', whiteSpace: 'nowrap' }}>
         <span className="animate-marquee" style={{ display: 'inline-block', fontSize: '0.63rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: '#0E0E0E' }}>
-          {Array(4).fill('LIVRAISON MONDIALE &nbsp;&nbsp;·&nbsp;&nbsp; QUALITÉ PREMIUM &nbsp;&nbsp;·&nbsp;&nbsp; PAIEMENT SÉCURISÉ STRIPE &nbsp;&nbsp;·&nbsp;&nbsp; RETOURS SOUS 30 JOURS &nbsp;&nbsp;·&nbsp;&nbsp; NOUVELLES ARRIVÉES &nbsp;&nbsp;·&nbsp;&nbsp;').join('')}
+          {Array(4).fill('LIVRAISON MONDIALE &nbsp;&nbsp;·&nbsp;&nbsp; QUALITÉ PREMIUM &nbsp;&nbsp;·&nbsp;&nbsp; PAIEMENT SÉCURISÉ &nbsp;&nbsp;·&nbsp;&nbsp; RETOURS SOUS 30 JOURS &nbsp;&nbsp;·&nbsp;&nbsp; NOUVELLES ARRIVÉES &nbsp;&nbsp;·&nbsp;&nbsp;').join('')}
         </span>
       </div>
 
@@ -82,23 +63,23 @@ export default function Home() {
           <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2.8rem', fontWeight: 300 }}>
             Nos <em style={{ fontStyle: 'italic', color: '#D4B896' }}>Collections</em>
           </h2>
-          <Link href="/produits" style={{ fontSize: '0.63rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#B8966E', textDecoration: 'none' }}>
-            Voir tout →
-          </Link>
+          <Link href="/produits" style={{ fontSize: '0.63rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#B8966E', textDecoration: 'none' }}>Voir tout →</Link>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
-          {produits.map((p) => (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+          {produits.slice(0, 6).map((p, i) => (
             <Link key={p.id} href={`/produits/${p.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div style={{ cursor: 'pointer' }}>
                 <div style={{ aspectRatio: '3/4', background: '#1A1612', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', position: 'relative', overflow: 'hidden' }}>
-                  <img src={p.id.includes('tshirt') ? '/hero-bg.jpg' : '/hero-bg2.jpg'} alt={p.nom} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, opacity: 0.75 }} />
-                  <div style={{ position: 'absolute', top: '1rem', left: '1rem', background: 'rgba(184,150,110,0.15)', border: '0.5px solid rgba(184,150,110,0.4)', padding: '0.25rem 0.6rem', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#B8966E' }}>
-                    {p.tag}
-                  </div>
+                  <img src={i % 2 === 0 ? '/hero-bg.jpg' : '/hero-bg2.jpg'} alt={p.nom} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, opacity: 0.75 }} />
+                  {p.tag && (
+                    <div style={{ position: 'absolute', top: '1rem', left: '1rem', background: 'rgba(14,14,14,0.7)', border: '0.5px solid rgba(184,150,110,0.4)', padding: '0.25rem 0.6rem', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#B8966E', zIndex: 1 }}>
+                      {p.tag}
+                    </div>
+                  )}
                 </div>
                 <div style={{ fontSize: '0.6rem', letterSpacing: '0.15em', color: '#B8966E', textTransform: 'uppercase', marginBottom: '0.3rem' }}>{p.categorie}</div>
                 <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.1rem', fontWeight: 300, marginBottom: '0.3rem' }}>{p.nom}</div>
-                <div style={{ fontSize: '0.82rem', color: 'rgba(245,240,232,0.65)', fontWeight: 300 }}>{p.prix.toFixed(2)} €</div>
+                <div style={{ fontSize: '0.82rem', color: 'rgba(245,240,232,0.65)', fontWeight: 300 }}>{convertir(p.prix)}</div>
               </div>
             </Link>
           ))}
@@ -109,7 +90,7 @@ export default function Home() {
       <section style={{ margin: '0 5rem 6rem', borderTop: '0.5px solid rgba(184,150,110,0.15)', borderBottom: '0.5px solid rgba(184,150,110,0.15)', padding: '4rem 0', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem', textAlign: 'center' }}>
         {[
           { titre: 'Livraison Mondiale', desc: 'France, Afrique, international. Suivi inclus.' },
-          { titre: 'Paiement Sécurisé', desc: 'Stripe certifié. Visa, Mastercard, Apple Pay.' },
+          { titre: 'Paiement Sécurisé', desc: 'Flutterwave. Visa, Mastercard, Mobile Money.' },
           { titre: 'Satisfaction 30j', desc: 'Retour ou échange sans conditions.' },
         ].map(v => (
           <div key={v.titre}>
