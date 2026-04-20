@@ -60,7 +60,7 @@ export default function ProduitPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'start' }}>
           {/* Image */}
           <div style={{ aspectRatio: '3/4', background: '#1A1612', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-            <span style={{ fontFamily: 'Cormorant Garamond, serif', display: 'none' }}>{produit.categorie[0]}</span>
+            <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '10rem', color: 'rgba(184,150,110,0.1)', fontWeight: 300 }}>{produit.categorie[0]}</span>
             {produit.tag && (
               <div style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', background: 'rgba(184,150,110,0.15)', border: '0.5px solid rgba(184,150,110,0.4)', padding: '0.3rem 0.8rem', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#B8966E' }}>
                 {produit.tag}
