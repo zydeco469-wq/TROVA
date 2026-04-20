@@ -60,8 +60,8 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div style={{ background: '#1A1612', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-          <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '12rem', fontWeight: 300, color: 'rgba(184,150,110,0.08)', letterSpacing: '0.05em' }}>T</span>
+        <div style={{ background: '#1A1612', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
+          <img src="/hero-bg.jpg" alt="TROVA" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, opacity: 0.6 }} />
           <div style={{ position: 'absolute', bottom: '3rem', right: '3rem', border: '0.5px solid rgba(184,150,110,0.4)', padding: '1.2rem 1.5rem', textAlign: 'center' }}>
             <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2.2rem', color: '#B8966E', display: 'block' }}>4</span>
             <span style={{ fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(245,240,232,0.5)' }}>Collections</span>
@@ -91,9 +91,7 @@ export default function Home() {
             <Link key={p.id} href={`/produits/${p.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div style={{ cursor: 'pointer' }}>
                 <div style={{ aspectRatio: '3/4', background: '#1A1612', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', position: 'relative', overflow: 'hidden' }}>
-                  <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '4rem', color: 'rgba(184,150,110,0.12)', fontWeight: 300 }}>
-                    {p.categorie[0]}
-                  </span>
+                  <img src={p.id.includes('tshirt') ? '/hero-bg.jpg' : '/hero-bg2.jpg'} alt={p.nom} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, opacity: 0.75 }} />
                   <div style={{ position: 'absolute', top: '1rem', left: '1rem', background: 'rgba(184,150,110,0.15)', border: '0.5px solid rgba(184,150,110,0.4)', padding: '0.25rem 0.6rem', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#B8966E' }}>
                     {p.tag}
                   </div>
