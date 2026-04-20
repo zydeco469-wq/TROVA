@@ -70,7 +70,7 @@ export default function Home() {
             <Link key={p.id} href={`/produits/${p.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div style={{ cursor: 'pointer' }}>
                 <div style={{ aspectRatio: '3/4', background: '#1A1612', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', position: 'relative', overflow: 'hidden' }}>
-                  <img src={i % 2 === 0 ? '/hero-bg.jpg' : '/hero-bg2.jpg'} alt={p.nom} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, opacity: 0.75 }} />
+                  <img src={`/${p.id}.jpg`} alt={p.nom} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, opacity: 0.75 }} />
                   {p.tag && (
                     <div style={{ position: 'absolute', top: '1rem', left: '1rem', background: 'rgba(14,14,14,0.7)', border: '0.5px solid rgba(184,150,110,0.4)', padding: '0.25rem 0.6rem', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#B8966E', zIndex: 1 }}>
                       {p.tag}
